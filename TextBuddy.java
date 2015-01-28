@@ -62,7 +62,7 @@ public class TextBuddy {
 	}
 	
 	// Program will append the specific line of text to the file given
-	private static void addLineToFile(String file, String lineOfText ){
+	private static void addLineToFile(String file, String lineOfText ) {
 		try {
 			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
 			writer.println(lineOfText);
@@ -131,14 +131,13 @@ public class TextBuddy {
 			PrintWriter writer = new PrintWriter(new FileWriter(file, false));
 		
 			for (String line: allLines) {
-				if(counter != index){
-				writer.println(line);
-				counter++;
+				if (counter != index) {
+					writer.println(line);
 				} else {
 					isDeleted = true;
 					System.out.println("deleted from " + file + ": " + "\"" + line + "\"");
-					counter++;
 				}
+				counter++;
 			}
 			if (!isDeleted) {
 				System.out.println("Line number " + number + " does not exist...");
