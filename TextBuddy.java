@@ -152,6 +152,10 @@ public class TextBuddy {
 		isRunning  = false;
 	}
 	
+	private static void showUnknownCommandMsg() {
+		System.out.println("Unknown command given...");
+	}
+	
 	// Program will check what command was issued before calling out other functions
 	private static void executeCommand(String file, String string) {
 		String[] stringArr = string.split(" ", 2);
@@ -175,10 +179,10 @@ public class TextBuddy {
 				String actionWord = stringArr[1];
 				deleteLineInFile(file, actionWord);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out.println("Please provide the line to be deleted...");
+				System.out.println("Please provide the line number to be deleted...");
 			}
 		} else {
-			System.out.println("Unknown command given...");
+			showUnknownCommandMsg();
 		}
 	}
 
