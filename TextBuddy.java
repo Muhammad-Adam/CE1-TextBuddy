@@ -41,6 +41,7 @@ command: exit
 public class TextBuddy {
 	private static boolean isRunning = true;
 	private static Scanner input = new Scanner(System.in);
+	private static PrintWriter writer = null;
 	
 	private static void printWelcomeMessage(String string) {
 		System.out.println("Welcome to TextBuddy. " + string + " is ready for use");
@@ -49,7 +50,7 @@ public class TextBuddy {
 	// Upon starting up the application, program will create a new text file with the name based on user input
 	private static void createNewWriter(String file) {
 		try {
-			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+			writer = new PrintWriter(new FileWriter(file, true));
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,7 +65,7 @@ public class TextBuddy {
 	// Program will append the specific line of text to the file given
 	private static void addLineToFile(String file, String lineOfText ) {
 		try {
-			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+			writer = new PrintWriter(new FileWriter(file, true));
 			writer.println(lineOfText);
 			System.out.println("added to " + file + ": " + "\"" + lineOfText + "\"");
 			writer.close();
@@ -96,7 +97,7 @@ public class TextBuddy {
 	// Program will delete all the contents of the file
 	private static void clearFile(String file) {
 		try {
-			PrintWriter writer = new PrintWriter(file);
+			writer = new PrintWriter(file);
 			writer.close();
 			System.out.println("all content deleted from " + file);
 		} catch (FileNotFoundException e) {
@@ -128,7 +129,7 @@ public class TextBuddy {
 			int counter = 1;
 			int index = Integer.parseInt(number);
 			boolean isDeleted = false;
-			PrintWriter writer = new PrintWriter(new FileWriter(file, false));
+			writer = new PrintWriter(new FileWriter(file, false));
 		
 			for (String line: allLines) {
 				if (counter != index) {
