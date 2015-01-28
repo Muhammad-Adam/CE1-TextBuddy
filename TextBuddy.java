@@ -42,93 +42,87 @@ public class TextBuddy {
 	private static boolean isRunning = true;
 	private static Scanner input = new Scanner(System.in);
 	
-	private static void printWelcomeMessage(String string){
+	private static void printWelcomeMessage(String string) {
 		System.out.println("Welcome to TextBuddy. " + string + " is ready for use");
 	}
 	
 	// Upon starting up the application, program will create a new text file with the name based on user input
-	private static void createNewWriter(String file){
-		try{
+	private static void createNewWriter(String file) {
+		try {
 			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
 			writer.close();
-		}
-		catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static String promptForCommand(){
+	private static String promptForCommand() {
 		System.out.print("command: ");
 		return input.nextLine();
 	}
 	
 	// Program will append the specific line of text to the file given
-	private static void addLineToFile(String file, String lineOfText){
-		try{
+	private static void addLineToFile(String file, String lineOfText ){
+		try {
 			PrintWriter writer = new PrintWriter(new FileWriter(file, true));
 			writer.println(lineOfText);
 			System.out.println("added to " + file + ": " + "\"" + lineOfText + "\"");
 			writer.close();
-		}
-		catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	// Program will print line by line to the console, appending bulletpoints before each line
-	private static void printLineOnScreen(String file){
-		try{
+	private static void printLineOnScreen(String file) {
+		try {
 			File content = new File(file);
 			Scanner textFile = new Scanner(content);
-			if(!textFile.hasNextLine()){
+			if (!textFile.hasNextLine()) {
 				System.out.println(file + " is empty");
-			}
-			else{
+			} else {
 				int bulletpoint = 1;
-				while(textFile.hasNextLine()){
+				while (textFile.hasNextLine()) {
 					System.out.println("" + bulletpoint + ". " + textFile.nextLine());
 					bulletpoint++;
 				}
 			}
 			textFile.close();
-		}
-		catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			System.err.println("File not found in the working directory");
 		}
 	}
 	
 	// Program will delete all the contents of the file
-	private static void clearFile(String file){
-		try{
+	private static void clearFile(String file) {
+		try {
 			PrintWriter writer = new PrintWriter(file);
 			writer.close();
 			System.out.println("all content deleted from " + file);
-		}
-		catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			System.out.println("File not found in working directory");
 		}
 	}
 	
 	// Program will store all the lines in an array
-	private static ArrayList<String> storeInArrayList(String file){
+	private static ArrayList<String> storeInArrayList(String file) {
 		ArrayList<String> listOfText = new ArrayList<String>();
 		try {
 			File content = new File(file);
 			Scanner textFile = new Scanner(content);
 		
-			while(textFile.hasNextLine()){
+			while (textFile.hasNextLine()) {
 				listOfText.add(textFile.nextLine());
 			}
 			textFile.close();
-		}
-		catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			System.err.println("File not found in working directory...");
 		}
 		return listOfText;
 	}
 	
 	// Program will delete the nth line of the file
-	private static void deleteLineInFile(String file, String number){
+	private static void deleteLineInFile(String file, String number) {
 		try {
 			ArrayList<String> allLines = storeInArrayList(file);
 			int counter = 1;
@@ -136,68 +130,59 @@ public class TextBuddy {
 			boolean isDeleted = false;
 			PrintWriter writer = new PrintWriter(new FileWriter(file, false));
 		
-			for(String line: allLines){
+			for (String line: allLines) {
 				if(counter != index){
 				writer.println(line);
 				counter++;
-				}
-				else{
+				} else {
 					isDeleted = true;
 					System.out.println("deleted from " + file + ": " + "\"" + line + "\"");
 					counter++;
 				}
 			}
-			if(!isDeleted){
+			if (!isDeleted) {
 				System.out.println("Line number " + number + " does not exist...");
 			}
 			writer.close();
-		}
-		catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	// Program will check what command was issued before calling out other functions
-	private static void executeCommand(String file, String string){
+	private static void executeCommand(String file, String string) {
 		String[] stringArr = string.split(" ", 2);
 		String keyword = stringArr[0];
 		
-		if(keyword.equals("add")){
+		if (keyword.equals("add")) {
 			try {
 				String actionWord = stringArr[1];
 				addLineToFile(file, actionWord);
-			}
-			catch(ArrayIndexOutOfBoundsException e){
+			} catch (ArrayIndexOutOfBoundsException e) {
 				System.out.println("Nothing to add...");
 			}
-		}
-		else if(keyword.equals("exit")){
+		} else if (keyword.equals("exit")) {
 			isRunning = false;
-		}
-		else if(keyword.equals("display")){
+		} else if (keyword.equals("display")) {
 			printLineOnScreen(file);
-		}
-		else if(keyword.equals("clear")){
+		} else if (keyword.equals("clear")) {
 			clearFile(file);
-		}
-		else if(keyword.equals("delete")){
+		} else if (keyword.equals("delete")) {
 			try {
 				String actionWord = stringArr[1];
 				deleteLineInFile(file, actionWord);
-			}
-			catch(ArrayIndexOutOfBoundsException e){
+			} catch (ArrayIndexOutOfBoundsException e) {
 				System.out.println("Please provide the line to be deleted...");
 			}
-		}
-		else{
+		} else {
 			System.out.println("Unknown command given...");
 		}
 	}
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 		printWelcomeMessage(args[0]);
 		createNewWriter(args[0]);
-		while(isRunning){
+		while (isRunning) {
 			String command = promptForCommand();
 			executeCommand(args[0], command);
 		}	
