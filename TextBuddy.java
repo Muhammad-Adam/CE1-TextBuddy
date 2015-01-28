@@ -148,6 +148,10 @@ public class TextBuddy {
 		}
 	}
 	
+	private static void exitProgram() {
+		isRunning  = false;
+	}
+	
 	// Program will check what command was issued before calling out other functions
 	private static void executeCommand(String file, String string) {
 		String[] stringArr = string.split(" ", 2);
@@ -161,7 +165,7 @@ public class TextBuddy {
 				System.out.println("Nothing to add...");
 			}
 		} else if (keyword.equals("exit")) {
-			isRunning = false;
+			exitProgram();
 		} else if (keyword.equals("display")) {
 			printLineOnScreen(file);
 		} else if (keyword.equals("clear")) {
