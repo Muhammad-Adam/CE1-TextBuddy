@@ -36,7 +36,7 @@ command: display
 mytextfile.txt is empty
 command: exit
 
-**/
+*/
 
 public class TextBuddy {
 	private static boolean isRunning = true;
