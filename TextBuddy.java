@@ -41,8 +41,10 @@ command: exit
 public class TextBuddy {
 	
 	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. %s is ready for use%n";
+	private static final String MESSAGE_COMMAND = "command: ";
 	private static final String MESSAGE_ADDED = "added to %s: \"%s\"%n";
 	private static final String MESSAGE_EMPTY = "%s is empty%n";
+	private static final String MESSAGE_PRINT_LINE = "%d. %s%n";
 	private static final String MESSAGE_NOT_FOUND = "File not found in the working directory";
 	private static final String MESSAGE_CLEARED = "all content deleted from %s%n";
 	private static final String MESSAGE_DELETED = "deleted from %s: \"%s\"%n";
@@ -79,7 +81,7 @@ public class TextBuddy {
 	}
 	
 	private static String promptForCommand() {
-		System.out.print("command: ");
+		System.out.print(MESSAGE_COMMAND);
 		return input.nextLine();
 	}
 	
@@ -106,7 +108,7 @@ public class TextBuddy {
 			} else {
 				int bulletpoint = 1;
 				while (textFile.hasNextLine()) {
-					System.out.println("" + bulletpoint + ". " + textFile.nextLine());
+					System.out.printf(MESSAGE_PRINT_LINE, bulletpoint, textFile.nextLine());
 					bulletpoint++;
 				}
 			}
