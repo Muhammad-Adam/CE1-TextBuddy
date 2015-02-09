@@ -39,12 +39,24 @@ command: exit
 */
 
 public class TextBuddy {
+	
+	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. %s is ready for use%n";
+	private static final String MESSAGE_ADDED = "added to %s: \"%s\"%n";
+	private static final String MESSAGE_EMPTY = "%s is empty%n";
+	private static final String MESSAGE_NOT_FOUND = "File not found in the working directory";
+	private static final String MESSAGE_CLEARED = "all content deleted from %s%n";
+	private static final String MESSAGE_DELETED = "deleted from %s: \"%s\"%n";
+	private static final String MESSAGE_NO_EXIST = "Line number %d does not exist";
+	private static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command given";
+	private static final String MESSAGE_NO_ADD = "Nothing to add";
+	private static final String MESSAGE_NO_NUMBER = "Please provide a number";
+	
 	private static boolean isRunning = true;
 	private static Scanner input = new Scanner(System.in);
 	private static PrintWriter writer = null;
 	
 	private static void printWelcomeMessage(String string) {
-		System.out.println("Welcome to TextBuddy. " + string + " is ready for use");
+		System.out.printf(MESSAGE_WELCOME, string);
 	}
 	
 	// Upon starting up the application, program will create a new text file with the name based on user input
@@ -67,11 +79,12 @@ public class TextBuddy {
 		try {
 			writer = new PrintWriter(new FileWriter(file, true));
 			writer.println(lineOfText);
-			System.out.println("added to " + file + ": " + "\"" + lineOfText + "\"");
 			writer.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.printf(MESSAGE_ADDED, file, lineOfText);
 	}
 	
 	// Program will print line by line to the console, appending bulletpoints before each line
@@ -80,7 +93,7 @@ public class TextBuddy {
 			File content = new File(file);
 			Scanner textFile = new Scanner(content);
 			if (!textFile.hasNextLine()) {
-				System.out.println(file + " is empty");
+				System.out.printf(MESSAGE_EMPTY, file);
 			} else {
 				int bulletpoint = 1;
 				while (textFile.hasNextLine()) {
@@ -90,7 +103,7 @@ public class TextBuddy {
 			}
 			textFile.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("File not found in the working directory");
+			System.out.println(MESSAGE_NOT_FOUND);
 		}
 	}
 	
@@ -99,9 +112,9 @@ public class TextBuddy {
 		try {
 			writer = new PrintWriter(file);
 			writer.close();
-			System.out.println("all content deleted from " + file);
+			System.out.printf(MESSAGE_CLEARED, file);
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found in working directory");
+			System.out.println(MESSAGE_NOT_FOUND);
 		}
 	}
 	
@@ -117,7 +130,7 @@ public class TextBuddy {
 			}
 			textFile.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("File not found in working directory...");
+			System.out.println(MESSAGE_NOT_FOUND);
 		}
 		return listOfText;
 	}
@@ -136,12 +149,12 @@ public class TextBuddy {
 					writer.println(line);
 				} else {
 					isDeleted = true;
-					System.out.println("deleted from " + file + ": " + "\"" + line + "\"");
+					System.out.printf(MESSAGE_DELETED, file, line);
 				}
 				counter++;
 			}
 			if (!isDeleted) {
-				System.out.println("Line number " + number + " does not exist...");
+				System.out.printf(MESSAGE_NO_EXIST, number);
 			}
 			writer.close();
 		} catch (IOException e) {
@@ -154,7 +167,7 @@ public class TextBuddy {
 	}
 	
 	private static void showUnknownCommandMsg() {
-		System.out.println("Unknown command given...");
+		System.out.println(MESSAGE_UNKNOWN_COMMAND);
 	}
 	
 	// Program will check what command was issued before calling out other functions
@@ -167,7 +180,7 @@ public class TextBuddy {
 				String actionWord = stringArr[1];
 				addLineToFile(file, actionWord);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out.println("Nothing to add...");
+				System.out.println(MESSAGE_NO_ADD);
 			}
 		} else if (keyword.equals("exit")) {
 			exitProgram();
@@ -180,7 +193,7 @@ public class TextBuddy {
 				String actionWord = stringArr[1];
 				deleteLineInFile(file, actionWord);
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out.println("Please provide the line number to be deleted...");
+				System.out.println(MESSAGE_NO_NUMBER);
 			}
 		} else {
 			showUnknownCommandMsg();
