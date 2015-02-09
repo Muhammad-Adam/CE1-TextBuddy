@@ -55,6 +55,15 @@ public class TextBuddy {
 	private static Scanner input = new Scanner(System.in);
 	private static PrintWriter writer = null;
 	
+	public static void main(String[] args) {
+		printWelcomeMessage(args[0]);
+		createNewWriter(args[0]);
+		while (isRunning) {
+			String command = promptForCommand();
+			executeCommand(args[0], command);
+		}	
+    }
+	
 	private static void printWelcomeMessage(String string) {
 		System.out.printf(MESSAGE_WELCOME, string);
 	}
@@ -199,13 +208,4 @@ public class TextBuddy {
 			showUnknownCommandMsg();
 		}
 	}
-
-    public static void main(String[] args) {
-		printWelcomeMessage(args[0]);
-		createNewWriter(args[0]);
-		while (isRunning) {
-			String command = promptForCommand();
-			executeCommand(args[0], command);
-		}	
-    }
 }
