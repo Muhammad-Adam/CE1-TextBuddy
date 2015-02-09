@@ -46,7 +46,7 @@ public class TextBuddy {
 	private static final String MESSAGE_NOT_FOUND = "File not found in the working directory";
 	private static final String MESSAGE_CLEARED = "all content deleted from %s%n";
 	private static final String MESSAGE_DELETED = "deleted from %s: \"%s\"%n";
-	private static final String MESSAGE_NO_EXIST = "Line number %d does not exist";
+	private static final String MESSAGE_NO_EXIST = "Line number %d does not exist%n";
 	private static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command given";
 	private static final String MESSAGE_NO_ADD = "Nothing to add";
 	private static final String MESSAGE_NO_NUMBER = "Please provide a number";
@@ -154,7 +154,7 @@ public class TextBuddy {
 				counter++;
 			}
 			if (!isDeleted) {
-				System.out.printf(MESSAGE_NO_EXIST, number);
+				System.out.printf(MESSAGE_NO_EXIST, index);
 			}
 			writer.close();
 		} catch (IOException e) {
