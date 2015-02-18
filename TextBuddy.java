@@ -70,7 +70,7 @@ public class TextBuddy {
 		System.out.printf(MESSAGE_WELCOME, string);
 	}
 	
-	// Upon starting up the application, program will create a new text file with the name based on user input
+	// Program create a new text file with the name based on user input
 	private static void createNewWriter(String file) {
 		try {
 			writer = new PrintWriter(new FileWriter(file, true));
