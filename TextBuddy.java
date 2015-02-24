@@ -54,7 +54,7 @@ public class TextBuddy {
 	private static final String MESSAGE_NO_NUMBER = "Please provide a number";
 	
 	private static boolean isRunning = true;
-	private static Scanner input = new Scanner(System.in);
+	private static Scanner userInput = new Scanner(System.in);
 	private static PrintWriter writer = null;
 	
 	public static void main(String[] args) {
@@ -66,14 +66,14 @@ public class TextBuddy {
 		}	
     }
 	
-	private static void printWelcomeMessage(String string) {
-		System.out.printf(MESSAGE_WELCOME, string);
+	private static void printWelcomeMessage(String fileName) {
+		System.out.printf(MESSAGE_WELCOME, fileName);
 	}
 	
 	// Program create a new text file with the name based on user input
-	private static void createNewWriter(String file) {
+	private static void createNewWriter(String fileName) {
 		try {
-			writer = new PrintWriter(new FileWriter(file, true));
+			writer = new PrintWriter(new FileWriter(fileName, true));
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -82,29 +82,29 @@ public class TextBuddy {
 	
 	private static String promptForCommand() {
 		System.out.print(MESSAGE_COMMAND);
-		return input.nextLine();
+		return userInput.nextLine();
 	}
 	
 	// Program will append the specific line of text to the file given
-	private static void addLineToFile(String file, String lineOfText ) {
+	private static void addLineToFile(String fileName, String lineOfText ) {
 		try {
-			writer = new PrintWriter(new FileWriter(file, true));
+			writer = new PrintWriter(new FileWriter(fileName, true));
 			writer.println(lineOfText);
 			writer.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.printf(MESSAGE_ADDED, file, lineOfText);
+		System.out.printf(MESSAGE_ADDED, fileName, lineOfText);
 	}
 	
 	// Program will print line by line to the console, appending bulletpoints before each line
-	private static void printLineOnScreen(String file) {
+	private static void printLineOnScreen(String fileName) {
 		try {
-			File content = new File(file);
+			File content = new File(fileName);
 			Scanner textFile = new Scanner(content);
 			if (!textFile.hasNextLine()) {
-				System.out.printf(MESSAGE_EMPTY, file);
+				System.out.printf(MESSAGE_EMPTY, fileName);
 			} else {
 				int bulletpoint = 1;
 				while (textFile.hasNextLine()) {
@@ -119,21 +119,21 @@ public class TextBuddy {
 	}
 	
 	// Program will delete all the contents of the file
-	private static void clearFile(String file) {
+	private static void clearFile(String fileName) {
 		try {
-			writer = new PrintWriter(file);
+			writer = new PrintWriter(fileName);
 			writer.close();
-			System.out.printf(MESSAGE_CLEARED, file);
+			System.out.printf(MESSAGE_CLEARED, fileName);
 		} catch (FileNotFoundException e) {
 			System.out.println(MESSAGE_NOT_FOUND);
 		}
 	}
 	
 	// Program will store all the lines in an array
-	private static ArrayList<String> storeInArrayList(String file) {
+	private static ArrayList<String> storeInArrayList(String fileName) {
 		ArrayList<String> listOfText = new ArrayList<String>();
 		try {
-			File content = new File(file);
+			File content = new File(fileName);
 			Scanner textFile = new Scanner(content);
 		
 			while (textFile.hasNextLine()) {
@@ -147,20 +147,20 @@ public class TextBuddy {
 	}
 	
 	// Program will delete the nth line of the file
-	private static void deleteLineInFile(String file, String number) {
+	private static void deleteLineInFile(String fileName, String number) {
 		try {
-			ArrayList<String> allLines = storeInArrayList(file);
+			ArrayList<String> allLines = storeInArrayList(fileName);
 			int counter = 1;
 			int index = Integer.parseInt(number);
 			boolean isDeleted = false;
-			writer = new PrintWriter(new FileWriter(file, false));
+			writer = new PrintWriter(new FileWriter(fileName, false));
 		
 			for (String line: allLines) {
 				if (counter != index) {
 					writer.println(line);
 				} else {
 					isDeleted = true;
-					System.out.printf(MESSAGE_DELETED, file, line);
+					System.out.printf(MESSAGE_DELETED, fileName, line);
 				}
 				counter++;
 			}
