@@ -99,7 +99,7 @@ public class TextBuddy {
 	}
 	
 	// Program will print line by line to the console, appending bulletpoints before each line
-	private static void printLineOnScreen(String fileName) {
+	private static void printLinesOnScreen(String fileName) {
 		try {
 			File content = new File(fileName);
 			Scanner textFile = new Scanner(content);
@@ -196,7 +196,7 @@ public class TextBuddy {
 		} else if (keyword.equals("exit")) {
 			exitProgram();
 		} else if (keyword.equals("display")) {
-			printLineOnScreen(file);
+			printLinesOnScreen(file);
 		} else if (keyword.equals("clear")) {
 			clearFile(file);
 		} else if (keyword.equals("delete")) {
